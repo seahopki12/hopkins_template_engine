@@ -14,59 +14,143 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 const employees = [];
+// inquirer
+//     .prompt ([
+//         {
+//             type: "input",
+//             name: "name",
+//             message: "What is the employee's name?"
+//         },
+//         {
+//             type: "input",
+//             name: "email",
+//             message: "What is the employee's email?"
+//         },
+//         {
+//             type: "list",
+//             name: "role",
+//             message: "What role does this employee have in the company",
+//             choices: ["Manager", "Engineer", "Intern"]
+//         },
+//         {
+//             type: "input",
+//             name: "office",
+//             message: "If you are a manager, what is your office number so people can reach you easily? If you are not a manager, please put 'n/a'."
+//         },
+//         {
+//             type: "input",
+//             name: "github",
+//             message: "If you are an engineer, what is your github username. If you are not an engineer, please put 'n/a'."
+//         },
+//         {
+//             type: "input",
+//             name: "school",
+//             message: "If you are an intern, please input the name of your school. If you are not an intern, please put 'n/a'."
+//         }
+//     ]).then(response => {
+//         const manager = new Manager(response.name, employees.length, response.email, response.office);
+//         const engineer = new Engineer(response.name, employees.length, response.email, response.github);
+//         const intern = new Intern(response.name, employees.length, response.email, response.school);
+//         switch (response.role) {
+//             case "Manager":
+//                 employees.push(manager);
+//                 break;
+//             case "Engineer":
+//                 employees.push(engineer);
+//                 break;
+//             case "Intern":
+//                 employees.push(intern);
+//                 break;
+//             default:
+//                 break;
+//         }
+//     });
+
 inquirer
-    .prompt ([
-        {
-            type: "input",
-            name: "name",
-            message: "What is the employee's name?"
-        },
+    .prompt([
         {
             type: "list",
             name: "role",
-            message: "What role does this employee have in the company",
+            message: "Pick from one of the options below that best suites your role with the company: ",
             choices: ["Manager", "Engineer", "Intern"]
-        },
-        {
-            type: "input",
-            name: "email",
-            message: "What is the employee's email?"
-        },
-        {
-            type: "input",
-            name: "office",
-            message: "If you are a manager, what is your office number so people can reach you easily? If you are not a manager, please put 'n/a'."
-        },
-        {
-            type: "input",
-            name: "github",
-            message: "If you are an engineer, what is your github username. If you are not an engineer, please put 'n/a'."
-        },
-        {
-            type: "input",
-            name: "school",
-            message: "If you are an intern, please input the name of your school. If you are not an intern, please put 'n/a'."
         }
     ]).then(response => {
-        const manager = new Manager(response.name, employees.length, response.email, response.office);
-        const engineer = new Engineer(response.name, employees.length, response.email, response.github);
-        const intern = new Intern(response.name, employees.length, response.email, response.school);
         switch (response.role) {
             case "Manager":
-                employees.push(manager);
+                inquirer
+                    .prompt([
+                        {
+                            type: "input",
+                            name: "name",
+                            message: "What is the employee's name?"
+                        },
+                        {
+                            type: "input",
+                            name: "email",
+                            message: "What is the employee's email?"
+                        },
+                        {
+                            type: "input",
+                            name: "office",
+                            message: "If you are a manager, what is your office number so people can reach you easily? If you are not a manager, please put 'n/a'."
+                        }
+                    ]).then(response => {
+                        const manager = new Manager(response.name, employees.length, response.email, response.office);
+                        employees.push(manager);
+                    });
                 break;
             case "Engineer":
-                employees.push(engineer);
+                inquirer
+                    .prompt([
+                        {
+                            type: "input",
+                            name: "name",
+                            message: "What is the employee's name?"
+                        },
+                        {
+                            type: "input",
+                            name: "email",
+                            message: "What is the employee's email?"
+                        },
+                        {
+                            type: "input",
+                            name: "github",
+                            message: "If you are an engineer, what is your github username. If you are not an engineer, please put 'n/a'."
+                        },
+                    ]).then(response => {
+                        const engineer = new Engineer(response.name, employees.length, response.email, response.github);
+                        employees.push(engineer);
+                    });
                 break;
             case "Intern":
-                employees.push(intern);
+                inquirer
+                    .prompt([
+                        {
+                            type: "input",
+                            name: "name",
+                            message: "What is the employee's name?"
+                        },
+                        {
+                            type: "input",
+                            name: "email",
+                            message: "What is the employee's email?"
+                        },
+                        {
+                            type: "input",
+                            name: "school",
+                            message: "If you are an intern, please input the name of your school. If you are not an intern, please put 'n/a'."
+                        }
+                    ]).then(response => {
+                        const intern = new Intern(response.name, employees.length, response.email, response.school);
+                        employees.push(intern);
+                    });
                 break;
             default:
                 break;
         }
-    });
-    
-    render(employees);
+    })
+
+render(employees);
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
