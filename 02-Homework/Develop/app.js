@@ -22,15 +22,30 @@ inquirer
             message: "What is the employee's name?"
         },
         {
+            type: "list",
+            name: "role",
+            message: "What role does this employee have in the company",
+            choices: ["Manager", "Engineer", "Intern"]
+        },
+        {
             type: "input",
             name: "email",
             message: "What is the employee's email?"
         },
         {
-            type: "list",
-            name: "role",
-            message: "What role does this employee have in the company",
-            choices: ["Manager", "Engineer", "Intern"]
+            type: "input",
+            name: "office",
+            message: "If you are a manager, what is your office number so people can reach you easily? If you are not a manager, please put 'n/a'."
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "If you are an engineer, what is your github username. If you are not an engineer, please put 'n/a'."
+        },
+        {
+            type: "input",
+            name: "school",
+            message: "If you are an intern, please input the name of your school. If you are not an intern, please put 'n/a'."
         }
     ]).then(response => {
         const manager = new Manager(response.name, employees.length, response.email, response.office);
@@ -50,6 +65,8 @@ inquirer
                 break;
         }
     });
+    
+    render(employees);
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
